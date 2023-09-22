@@ -1,0 +1,17 @@
+//apresente uma mensagem na tela 
+//aplique estilos de formatação à mensagem impressa.
+// centralize a mensagem na tela
+
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(Center(
+    child: Text(
+      'Olá, Mundo!',
+      textDirection: TextDirection.ltr,
+      style: TextStyle(
+        color: Colors.red,
+      ),
+    ), //Text.
+  )); //runApp.
+}

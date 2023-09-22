@@ -1,0 +1,46 @@
+//crie uma classe que armazene os dados dos clientes de uma loja, 
+//e uma classe para armaazenar os dados dos produtos de uma fábrica
+
+class Cliente {
+  String nome;
+  String? endereco;
+  String email;
+  String telefone;
+
+  Cliente(this.nome, this.email, this.telefone, [this.endereco]);
+
+  void imprimirDados() {
+    print('Nome: $nome');
+    print('Endereço: $endereco');
+    print('E-mail: $email');
+    print('Telefone: $telefone');
+  }
+}
+
+// Classe para armazenar os dados dos produtos da fábrica
+class Produto {
+  String nome;
+  double preco;
+  int estoque;
+
+  Produto(this.nome, this.preco, this.estoque);
+
+  void imprimirDados() {
+    print('Nome do Produto: $nome');
+    print('Preço: $preco');
+    print('Estoque: $estoque unidades');
+  }
+}
+
+void main() {
+  // Exemplo de uso das classes
+  var cliente1 = Cliente(
+      'João da Silva', 'Rua A, 123', 'joao@email.com', '(11) 1234-5678');
+  var produto1 = Produto('Camiseta', 29.99, 100);
+
+  print('Dados do Cliente:');
+  cliente1.imprimirDados();
+
+  print('\nDados do Produto:');
+  produto1.imprimirDados();
+}
