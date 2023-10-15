@@ -1,0 +1,113 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MaterialApp(home: Home()));
+
+class Home extends StatefulWidget {
+  @override
+  HomeState createState() {
+    return HomeState();
+  }
+}
+
+class HomeState extends State<Home> {
+  TextEditingController pesoController = TextEditingController();
+  TextEditingController alturaController = TextEditingController();
+  String resp = "";
+  String classificacao = "";
+
+  void calcularImc() {
+    double peso = double.parse(pesoController.text);
+    double altura = double.parse(alturaController.text);
+    double imc = peso / (altura * altura);
+    resp = 'IMC: ${imc.toStringAsFixed(2)}';
+
+    if (imc < 16) {
+      classificacao = 'Magreza grave';
+    } else if (imc >= 16 && imc < 16.9) {
+      classificacao = 'Magreza moderada';
+    } else if (imc >= 17 && imc < 18.5) {
+      classificacao = 'Magreza leve';
+    } else if (imc >= 18.5 && imc < 24.9) {
+      classificacao = 'Saudável';
+    } else if (imc >= 25 && imc < 29.9) {
+      classificacao = 'Sobrepeso';
+    } else if (imc >= 30 && imc < 34.9) {
+      classificacao = 'Obesidade Grau I';
+    } else if (imc >= 35 && imc < 39.9) {
+      classificacao = 'Obesidade Grau II (severa)';
+    } else {
+      classificacao = 'Obesidade Grau III (mórbida)';
+    }
+
+   
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Calculadora de IMC'),
+      ),
+      body: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(10),
+            child: TextField(
+              controller: pesoController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () => pesoController.clear(),
+                  icon: const Icon(Icons.clear),
+                ),
+                border: const OutlineInputBorder(),
+                labelText: 'Informe o seu peso (em kg) ',
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.all(10),
+            child: TextField(
+              controller: alturaController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () => alturaController.clear(),
+                  icon: const Icon(Icons.clear),
+                ),
+                border: const OutlineInputBorder(),
+                labelText: 'Informe a sua altura (em metro)',
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: calcularImc,
+            child: const Text(
+              'Calcular IMC',
+              style: TextStyle(
+                fontSize: 20,
+              ),
+            ),
+          ),
+          Text(
+            resp,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            'Classificação: $classificacao',
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.blue,
+              fontWeight: FontWeight.bold,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

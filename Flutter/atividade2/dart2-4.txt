@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MeuApp());
+}
+
+class MeuApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: Container(
+          color: Color.fromARGB(190, 0, 0, 0), // Defina a cor de fundo como preto.
+          child: MeuWidget(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            // Adicione a ação que você deseja executar ao pressionar o botão aqui.
+          },
+          tooltip: 'Exemplo de botão',
+          child: Icon(Icons.add),
+        ),
+      ),
+    );
+  }
+}
+
+class MeuWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Expanded(
+          child: FittedBox(
+            fit: BoxFit.contain, // Permite aumentar o tamanho do logo.
+            child: FlutterLogo(),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Image(
+                image: NetworkImage(
+                  'https://picsum.photos/250?image=10',
+                ),
+              ),
+            ),
+            Expanded(
+              child: Image(
+                image: NetworkImage(
+                  'https://picsum.photos/250?image=25',
+                ),
+              ),
+            ),
+            Expanded(
+              child: Image(
+                image: NetworkImage(
+                  'https://picsum.photos/250?image=15',
+                ),
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 20),
+      ],
+    );
+  }
+}
