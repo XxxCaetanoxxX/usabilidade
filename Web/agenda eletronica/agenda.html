@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: rgb(59, 3, 59);
+            color: white;
+            text-align: center; /* Centraliza o conteúdo */
+        }
+        h1 {
+            margin-top: 50px; /* Adiciona um espaço superior */
+        }
+        #menu {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+            margin-top: 20px; /* Espaço acima do menu */
+        }
+        #menu li {
+            display: inline-block;
+            margin: 10px;
+        }
+        #menu button {
+            background-color: #ff9900;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        #menu button:hover {
+            background-color: #ff6600; /* Cor laranja mais escura ao passar o mouse */
+        }
+        /* Estilo para ícones */
+        .icon {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+
+        /* Estilos para os formulários */
+        #formulario {
+            background-color: #ff9900;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 400px; /* Largura máxima do formulário */
+        }
+
+        #formulario input[type="text"],
+        #formulario input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #formulario button {
+            background-color: #ff6600;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+    <title>Agenda Eletrônica</title>
+</head>
+<body>
+    <h1><i class="fas fa-book-open icon"></i> Agenda Eletrônica</h1>
+    
+    <!-- Menu de botões -->
+    <ul id="menu">
+        <li><button onclick="mostrarFormulario(1)"><i class="fas fa-user-plus icon"></i> Adicionar contato</button></li>
+        <li><button onclick="mostrarFormulario(2)"><i class="fas fa-user-minus icon"></i> Remover contato</button></li>
+        <li><button onclick="mostrarFormulario(3)"><i class="fas fa-search icon"></i> Buscar por nome</button></li>
+        <li><button onclick="mostrarFormulario(4)"><i class="fas fa-search icon"></i> Buscar por email</button></li>
+        <li><button onclick="mostrarFormulario(5)"><i class="fas fa-search icon"></i> Buscar por telefone</button></li>
+        <li><button onclick="consultarTamanhoAgenda()"><i class="fas fa-eye icon"></i> Consultar tamanho e contatos</button></li>
+        <li><button onclick="finalizar()"><i class="fas fa-power-off icon"></i> Finalizar</button></li>
+        <li><button onclick="adicionarContatoAoBancoDeDados()"><i class="fas fa-database icon"></i> Adicionar ao banco</button></li>
+        <li><button onclick="recuperarTodosOsContatos()"><i class="fas fa-database icon"></i> Recuperar do banco</button></li>
+        <button onclick="fecharListaContatos()" style="display: none;">Fechar lista</button>
+  
+
+<!-- Formulário para Buscar por nome -->
+<div id="formularioBuscarPorNome" style="display: none;">
+    <h2>Buscar contato por nome</h2>
+    <label for="nomeBuscar">Nome do contato a ser buscado:</label>
+    <input type="text" id="nomeBuscar" required><br>
+    <button onclick="buscarContatoPorNome()">Buscar</button>
+
+<div id="listaContatos" style="display: none;">
+    <h2>Lista de Contatos</h2>
+    <!-- A lista de contatos será exibida aqui -->
+</div>
+
+
+<!-- Formulário para Buscar por email -->
+<div id="formularioBuscarPorEmail" style="display: none;">
+    <h2>Buscar contato por email</h2>
+    <label for="emailBuscar">Email do contato a ser buscado:</label>
+    <input type="email" id="emailBuscar" required><br>
+    <button onclick="buscarContatoPorEmail()">Buscar</button>
+</div>
+
+<!-- Formulário para Buscar por telefone -->
+<div id="formularioBuscarPorTelefone" style="display: none;">
+    <h2>Buscar contato por telefone</h2>
+    <label for="telefoneBuscar">Telefone do contato a ser buscado:</label>
+    <input type="text" id="telefoneBuscar" required><br>
+    <button onclick="buscarContatoPorTelefone()">Buscar</button>
+</div>
+    </ul>
+    </div>
+    <div id="formulario" style="display: none;">
+        <!-- Formulário para adicionar, remover e buscar contatos -->
+    </div>
+    <div id="resultado">
+        <!-- Exibir resultados aqui -->
+    </div>
+    <script>
+        class Contato {
+            constructor(nome, email, telefone) {
+                this.nome = nome;
+                this.email = email;
+                this.telefone = telefone;
+            }
+        }
+
+        class Agenda {
+            constructor() {
+                this.contatos = [];
+            }
+
+            adicionarContato(contato) {
+                this.contatos.push(contato);
+            }
+
+            removerContato(nome) {
+                const index = this.contatos.findIndex(contato => contato.nome === nome);
+                if (index !== -1) {
+                    this.contatos.splice(index, 1);
+                    return "Contato removido com sucesso.";
+                } else {
+                    return "Contato não encontrado.";
+                }
+            }
+
+            buscarContatoPorNome(nome) {
+                return this.contatos.find(contato => contato.nome === nome);
+            }
+
+            buscarContatoPorEmail(email) {
+                return this.contatos.find(contato => contato.email === email);
+            }
+
+            buscarContatoPorTelefone(telefone) {
+                return this.contatos.find(contato => contato.telefone === telefone);
+            }
+
+            tamanhoDaAgenda() {
+                return this.contatos.length;
+            }
+        }
+
+        const agenda = new Agenda();
+
+        function mostrarFormulario(opcao) {
+            const formulario = document.getElementById("formulario");
+            formulario.style.display = "block";
+
+            let html = "";
+            if (opcao === 1) {
+                html = `
+                    <h2>1 Adicionar contato</h2>
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" required><br>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required><br>
+                    <label for="telefone">Telefone:</label>
+                    <input type="text" id="telefone" required><br>
+                    <button onclick="adicionarContato()">Adicionar</button>
+                `;
+            } else if (opcao === 2) {
+                html = `
+                    <h2>2 Remover contato</h2>
+                    <label for="nomeRemover">Nome do contato a ser removido:</label>
+                    <input type="text" id="nomeRemover" required><br>
+                    <button onclick="removerContato()">Remover</button>
+                `;
+            } else if (opcao === 3) {
+                html = `
+                    <h2>3 Buscar contato por nome</h2>
+                    <label for="nomeBuscar">Nome do contato a ser buscado:</label>
+                    <input type="text" id="nomeBuscar" required><br>
+                    <button onclick="buscarContatoPorNome()">Buscar</button>
+                `;
+            } else if (opcao === 4) {
+                html = `
+                    <h2>4 Buscar contato por email</h2>
+                    <label for="emailBuscar">Email do contato a ser buscado:</label>
+                    <input type="email" id="emailBuscar" required><br>
+                    <button onclick="buscarContatoPorEmail()">Buscar</button>
+                `;
+            } else if (opcao === 5) {
+                html = `
+                    <h2>5 Buscar contato por telefone</h2>
+                    <label for="telefoneBuscar">Telefone do contato a ser buscado:</label>
+                    <input type="text" id="telefoneBuscar" required><br>
+                    <button onclick="buscarContatoPorTelefone()">Buscar</button>
+                `;
+            }
+
+            formulario.innerHTML = html;
+        }
+
+        function adicionarContato() {
+            const nome = document.getElementById("nome").value;
+            const email = document.getElementById("email").value;
+            const telefone = document.getElementById("telefone").value;
+
+            const contato = new Contato(nome, email, telefone);
+            agenda.adicionarContato(contato);
+
+            document.getElementById("resultado").innerHTML = "Contato adicionado com sucesso.";
+        }
+
+        function removerContato() {
+            const nome = document.getElementById("nomeRemover").value;
+            const resultado = agenda.removerContato(nome);
+            document.getElementById("resultado").innerHTML = resultado;
+        }
+
+        function buscarContatoPorNome() {
+            const nome = document.getElementById("nomeBuscar").value;
+            const contato = agenda.buscarContatoPorNome(nome);
+            if (contato) {
+                document.getElementById("resultado").innerHTML = `Contato encontrado: ${contato.nome}, ${contato.email}, ${contato.telefone}`;
+            } else {
+                document.getElementById("resultado").innerHTML = "Contato não encontrado.";
+            }
+        }
+
+        function buscarContatoPorEmail() {
+            const email = document.getElementById("emailBuscar").value;
+            const contato = agenda.buscarContatoPorEmail(email);
+            if (contato) {
+                document.getElementById("resultado").innerHTML = `Contato encontrado: ${contato.nome}, ${contato.email}, ${contato.telefone}`;
+            } else {
+                document.getElementById("resultado").innerHTML = "Contato não encontrado.";
+            }
+        }
+
+        function buscarContatoPorTelefone() {
+            const telefone = document.getElementById("telefoneBuscar").value;
+            const contato = agenda.buscarContatoPorTelefone(telefone);
+            if (contato) {
+                document.getElementById("resultado").innerHTML = `Contato encontrado: ${contato.nome}, ${contato.email}, ${contato.telefone}`;
+            } else {
+                document.getElementById("resultado").innerHTML = "Contato não encontrado.";
+            }
+        }
+
+        function consultarTamanhoAgenda() {
+            const tamanho = agenda.tamanhoDaAgenda();
+            document.getElementById("resultado").innerHTML = `Tamanho da agenda: ${tamanho} contatos.`;
+        }
+
+        function finalizar() {
+            document.getElementById("formulario").style.display = "none";
+            document.getElementById("resultado").innerHTML = "";
+        }
+    </script>
+</body>
+</html>

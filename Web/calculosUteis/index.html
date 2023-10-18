@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cálculos Úteis</title>
+    <style>
+        body {
+            font-family: "Times New Roman", Times, serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .funcionalidade {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cálculos Úteis</h1>
+
+    <!-- Função para verificar se um número é par ou ímpar -->
+    <div class="funcionalidade">
+        <h2>Verificar Par ou Ímpar</h2>
+        <label>Digite um número:</label>
+        <input type="number" id="numero" oninput="verificarParOuImpar()">
+        <p id="resultado"></p>
+    </div>
+
+    <!-- Função para ordenar três números em ordem decrescente -->
+    <div class="funcionalidade">
+        <h2>Ordenar Números</h2>
+        <label>Digite três números diferentes:</label>
+        <input type="number" id="num1">
+        <input type="number" id="num2">
+        <input type="number" id="num3">
+        <button onclick="ordenarNumeros()">Ordenar</button>
+        <p id="resultadoOrdenacao"></p>
+    </div>
+
+    <!-- Função para calcular o peso ideal -->
+    <div class="funcionalidade">
+        <h2>Calcular Peso Ideal</h2>
+        <label>Digite sua altura (em metros):</label>
+        <input type="number" step="0.01" id="altura">
+        <label>Selecione o sexo:</label>
+        <select id="sexo">
+            <option value="homem">Homem</option>
+            <option value="mulher">Mulher</option>
+        </select>
+        <button onclick="calcularPesoIdeal()">Calcular Peso Ideal</button>
+        <p id="resultadoPesoIdeal"></p>
+    </div>
+
+    <!-- Função para calcular o preço com desconto -->
+    <div class="funcionalidade">
+        <h2>Calcular Preço Final</h2>
+        <label>Preço normal de etiqueta:</label>
+        <input type="number" step="0.01" id="preco">
+        <label>Selecione a condição de pagamento:</label>
+        <select id="condicao">
+            <option value="1">À vista, em dinheiro ou PIX</option>
+            <option value="2">À vista, no cartão de crédito</option>
+            <option value="3">Em duas vezes</option>
+            <option value="4">Em três vezes</option>
+        </select>
+        <button onclick="calcularPrecoFinal()">Calcular Preço Final</button>
+        <p id="resultadoPrecoFinal"></p>
+    </div>
+
+    <script>
+        // Verificar se um número é par ou ímpar
+        function verificarParOuImpar() {
+            const numero = document.getElementById('numero').value;
+            const resultado = document.getElementById('resultado');
+            
+            if (numero % 2 === 0) {
+                resultado.innerText = `${numero} é par.`;
+            } else {
+                resultado.innerText = `${numero} é ímpar.`;
+            }
+        }
+
+        // Ordenar três números em ordem decrescente
+        function ordenarNumeros() {
+            const num1 = parseFloat(document.getElementById('num1').value);
+            const num2 = parseFloat(document.getElementById('num2').value);
+            const num3 = parseFloat(document.getElementById('num3').value);
+            const resultadoOrdenacao = document.getElementById('resultadoOrdenacao');
+
+            const numerosOrdenados = [num1, num2, num3].sort((a, b) => b - a);
+            resultadoOrdenacao.innerText = `Números em ordem decrescente: ${numerosOrdenados.join(', ')}`;
+        }
+
+        // Calcular o peso ideal
+        function calcularPesoIdeal() {
+            const altura = parseFloat(document.getElementById('altura').value);
+            const sexo = document.getElementById('sexo').value;
+            const resultadoPesoIdeal = document.getElementById('resultadoPesoIdeal');
+
+            let pesoIdeal;
+
+            if (sexo === 'homem') {
+                pesoIdeal = (72.7 * altura) - 58;
+            } else {
+                pesoIdeal = (62.1 * altura) - 44.7;
+            }
+
+            resultadoPesoIdeal.innerText = `Seu peso ideal é ${pesoIdeal.toFixed(2)} kg.`;
+        }
+
+        // Calcular o preço final com desconto
+        function calcularPrecoFinal() {
+            const preco = parseFloat(document.getElementById('preco').value);
+            const condicao = parseInt(document.getElementById('condicao').value);
+            const resultadoPrecoFinal = document.getElementById('resultadoPrecoFinal');
+
+            let precoFinal;
+
+            switch (condicao) {
+                case 1:
+                    precoFinal = preco * 0.9; // 10% de desconto
+                    break;
+                case 2:
+                    precoFinal = preco * 0.95; // 5% de desconto
+                    break;
+                case 3:
+                    precoFinal = preco; // Preço normal em duas vezes
+                    break;
+                case 4:
+                    precoFinal = preco * 1.06; // Preço normal em três vezes com 6% de juros
+                    break;
+                default:
+                    precoFinal = preco;
+            }
+
+            resultadoPrecoFinal.innerText = `Preço final: R$ ${precoFinal.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 20px auto;
+  }
+
+  th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    vertical-align: top; /* Alinha o conteúdo das células no topo */
+  }
+
+  th:hover {
+    background-color: #ddd;
+  }
+
+  td:hover {
+    background-color: #eee;
+  }
+
+  .row-highlight:hover {
+    background-color: #f5f5f5;
+  }
+
+  .col-highlight:hover {
+    background-color: #f0f0f0;
+  }
+</style>
+</head>
+<body>
+
+<table>
+  <tr>
+    <th>Jogador</th>
+    <th>Time</th>
+    <th>Posição</th>
+    <th>Altura</th>
+    <th>Peso</th>
+    <th>Média de Pontos</th>
+    <th>Média de Assistências</th>
+  </tr>
+  <tr class="row-highlight">
+    <td id="lebron">LeBron James</td>
+    <td>L.A. Lakers</td>
+    <td>Ala</td>
+    <td>6'9"</td>
+    <td>250 lbs</td>
+    <td>25.0</td>
+    <td>7.8</td>
+  </tr>
+  <tr class="row-highlight">
+    <td id="durant">Kevin Durant</td>
+    <td>Brooklyn Nets</td>
+    <td>Ala</td>
+    <td>6'10"</td>
+    <td>240 lbs</td>
+    <td>28.2</td>
+    <td>5.2</td>
+  </tr>
+  <tr class="row-highlight">
+    <td id="curry">Stephen Curry</td>
+    <td>Golden State Warriors</td>
+    <td>Armador</td>
+    <td>6'3"</td>
+    <td>185 lbs</td>
+    <td>30.1</td>
+    <td>6.5</td>
+  </tr>
+</table>
+
+<script>
+  // Função para exibir mensagens ao clicar nas células
+  function exibirMensagem(jogador) {
+    var mensagem;
+    switch (jogador) {
+      case 'lebron':
+        mensagem = "LeBron James é uma das maiores estrelas da NBA e joga pelo L.A. Lakers. Média de Pontos: 25.0, Média de Assistências: 7.8.";
+        break;
+      case 'durant':
+        mensagem = "Kevin Durant é conhecido por sua capacidade de pontuação e atualmente joga pelo Brooklyn Nets. Média de Pontos: 28.2, Média de Assistências: 5.2.";
+        break;
+      case 'curry':
+        mensagem = "Stephen Curry é famoso por seu arremesso de longa distância e é um jogador do Golden State Warriors. Média de Pontos: 30.1, Média de Assistências: 6.5.";
+        break;
+      default:
+        mensagem = "Clique em uma célula para obter mais informações.";
+    }
+    alert(mensagem);
+  }
+
+  // Adicionar eventos de clique às células
+  document.getElementById('lebron').addEventListener('click', function() {
+    exibirMensagem('lebron');
+  });
+
+  document.getElementById('durant').addEventListener('click', function() {
+    exibirMensagem('durant');
+  });
+
+  document.getElementById('curry').addEventListener('click', function() {
+    exibirMensagem('curry');
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(
+  MaterialApp(
+    home: PrimeiraRota(),
+  ),
+);
+
+class Preco {
+double etanol;
+double gasolina;
+Preco(this.etanol, this.gasolina);
+razao() => etanol / gasolina;
+}
+
+class PrimeiraRota extends StatelessWidget {
+  final TextEditingController etanolController = TextEditingController();
+  final TextEditingController gasolinaController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Primeira Rota"),
+      ),
+      body: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(10),
+            child: TextField(
+              controller: etanolController,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () => etanolController.clear(),
+                  icon: const Icon(Icons.clear),
+                ),
+                border: const OutlineInputBorder(),
+                labelText: 'informe o preço do etanol',
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.all(10),
+            child: TextField(
+              controller: gasolinaController,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () => gasolinaController.clear(),
+                  icon: const Icon(Icons.clear),
+                ),
+                border: const OutlineInputBorder(),
+                labelText: 'informe o preço da gasolina',
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              double etanol = double.tryParse(etanolController.text) ?? 0.0;
+              etanol *= 0.10; 
+              double gasolina = double.tryParse(gasolinaController.text) ?? 0.0;
+              Preco preco = Preco(etanol, gasolina);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SegundaRota(preco),
+                ),
+              );
+            },
+            child: const Text('Ir para a Segunda Rota'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SegundaRota extends StatelessWidget {
+  final Preco preco;
+  const SegundaRota(this.preco);
+
+  String escolherCombustivel() {
+    double relacao = preco.razao();
+    if (relacao < 0.7) {
+      return 'Use Etanol';
+    } else {
+      return 'Use Gasolina';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Segunda Rota'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Text(
+              '${preco.etanol.toStringAsFixed(2)} / ${preco.gasolina.toStringAsFixed(2)} = ${preco.razao().toStringAsFixed(2)}',
+              style: const TextStyle(
+                fontSize: 25,
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              escolherCombustivel(),
+              style: const TextStyle(
+                fontSize: 25,
+                color: Colors.blue,
+              ),
+            ),
+            ElevatedButton(
+              child: const Text('Voltar para a Primeira Rota'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

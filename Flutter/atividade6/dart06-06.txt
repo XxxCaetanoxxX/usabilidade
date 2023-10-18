@@ -1,0 +1,118 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MeuAplicativo());
+
+class MeuAplicativo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: PrimeiraRota(),
+      routes: {
+        RotaGenerica.caminhoDaRota: (context) => RotaGenerica(),
+      },
+    );
+  }
+}
+
+class PrimeiraRota extends StatefulWidget {
+  @override
+  PrimeiraRotaState createState() => PrimeiraRotaState();
+}
+
+class PrimeiraRotaState extends State<PrimeiraRota> {
+  final TextEditingController temperaturaCelsiusController =
+      TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Conversor de Temperatura'),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: temperaturaCelsiusController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () => temperaturaCelsiusController.clear(),
+                  icon: const Icon(Icons.clear),
+                ),
+                border: const OutlineInputBorder(),
+                labelText: 'temperatura em graus Celsius',
+              ),
+            ),
+            ElevatedButton(
+              child: Text('Converter para Fahrenheit'),
+              onPressed: () {
+                double temperaturaCelsius =
+                    double.tryParse(temperaturaCelsiusController.text) ?? 0.0;
+                double temperaturaFahrenheit =
+                    converterParaFahrenheit(temperaturaCelsius);
+                Navigator.pushNamed(
+                  context,
+                  RotaGenerica.caminhoDaRota,
+                  arguments: ArgumentosDaRota(
+                    'Conversão de Temperatura',
+                    temperaturaCelsius,
+                    temperaturaFahrenheit,
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+double converterParaFahrenheit(double celsius) {
+  return (celsius * 1.8) + 32;
+}
+
+class RotaGenerica extends StatelessWidget {
+  static const caminhoDaRota = '/rotaGenerica';
+
+  @override
+  Widget build(BuildContext context) {
+    ArgumentosDaRota argumentos =
+        ModalRoute.of(context)!.settings.arguments as ArgumentosDaRota;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(argumentos.titulo),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Text(
+              'Graus Celsius: ${argumentos.celsius.toStringAsFixed(2)}°C',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.green,
+              ),
+            ),
+            Text(
+              'Graus Fahrenheit: ${argumentos.fahrenheit.toStringAsFixed(2)}°F',
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.red,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ArgumentosDaRota {
+  String titulo;
+  double celsius;
+  double fahrenheit;
+
+  ArgumentosDaRota(this.titulo, this.celsius, this.fahrenheit);
+}

@@ -1,0 +1,154 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(MeuAplicativo());
+
+class MeuAplicativo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: PrimeiraRota(),
+      routes: {
+        '/segunda': (context) => SegundaRota(),
+        '/terceira': (context) => TerceiraRota(),
+      },
+    );
+  }
+}
+
+class PrimeiraRota extends StatefulWidget {
+  @override
+  PrimeiraRotaState createState() => PrimeiraRotaState();
+}
+
+class PrimeiraRotaState extends State<PrimeiraRota> {
+  final realController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Conversor de Dólar'),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: realController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(
+                labelText: 'Valor em Reais',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                double real = double.tryParse(realController.text) ?? 0.0;
+                Navigator.pushNamed(
+                  context,
+                  '/segunda',
+                  arguments: ArgumentosDaRota(
+                    'Informe a cotação do Dólar',
+                    real,
+                    0.0, // Defina o valor do Dólar inicial como 0.0
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text('Próxima'),
+                  Icon(Icons.navigate_next),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SegundaRota extends StatefulWidget {
+  @override
+  SegundaRotaState createState() => SegundaRotaState();
+}
+
+class SegundaRotaState extends State<SegundaRota> {
+  final dolarController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    ArgumentosDaRota args = ModalRoute.of(context)!.settings.arguments as ArgumentosDaRota;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(args.titulo),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Text(
+              'Valor em Reais: R\$ ${args.real.toStringAsFixed(2)}',
+              style: TextStyle(fontSize: 20, color: Colors.green),
+            ),
+            TextField(
+              controller: dolarController,
+              keyboardType: TextInputType.numberWithOptions(decimal: true),
+              decoration: InputDecoration(
+                labelText: 'Cotação do Dólar',
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                double dolar = double.tryParse(dolarController.text) ?? 0.0;
+                Navigator.pushNamed(
+                  context,
+                  '/terceira',
+                  arguments: ArgumentosDaRota(
+                    'Resultado da Conversão',
+                    args.real,
+                    dolar,
+                  ),
+                );
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text('Proximo'),
+                  Icon(Icons.navigate_next),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class TerceiraRota extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    ArgumentosDaRota args = ModalRoute.of(context)!.settings.arguments as ArgumentosDaRota;
+    double resultado = args.real / args.dolar;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(args.titulo),
+      ),
+      body: Center(
+        child: Text(
+          'R\$ ${args.real.toStringAsFixed(2)} = \$ ${resultado.toStringAsFixed(2)}',
+          style: TextStyle(fontSize: 24, color: Colors.blue),
+        ),
+      ),
+    );
+  }
+}
+
+class ArgumentosDaRota {
+  String titulo;
+  double real;
+  double dolar;
+
+  ArgumentosDaRota(this.titulo, this.real, this.dolar);
+}

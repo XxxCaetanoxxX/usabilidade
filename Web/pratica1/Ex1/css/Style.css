@@ -1,0 +1,40 @@
+/* Estilos CSS para a página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Remove espaços em branco abaixo da imagem */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+}
+
+h1 {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px; /* Espaçamento superior para o título */
+}
+
+p {
+    font-size: 16px;
+    margin: 10px 0; /* Espaçamento vertical entre parágrafos */
+}

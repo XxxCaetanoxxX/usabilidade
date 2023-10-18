@@ -1,0 +1,143 @@
+import 'package:flutter/material.dart';
+
+void main() => runApp(
+  MaterialApp(
+    home: PrimeiraRota(),
+  ),
+);
+
+class Preco {
+  double etanol;
+  double gasolina;
+  Preco(this.etanol, this.gasolina);
+  razao() => etanol / gasolina;
+}
+
+String escolherCombustivel(Preco preco) {
+  double relacao = preco.razao();
+  if (relacao < 0.7) {
+    return 'Use Etanol';
+  } else {
+    return 'Use Gasolina';
+  }
+}
+
+class PrimeiraRota extends StatefulWidget {
+  @override
+  _PrimeiraRotaState createState() => _PrimeiraRotaState();
+}
+
+class _PrimeiraRotaState extends State<PrimeiraRota> {
+  final TextEditingController etanolController = TextEditingController();
+  final TextEditingController gasolinaController = TextEditingController();
+  String mensagemCombustivel = ''; 
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Primeira Rota"),
+      ),
+      body: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(10),
+            child: TextField(
+              controller: etanolController,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () => etanolController.clear(),
+                  icon: const Icon(Icons.clear),
+                ),
+                border: const OutlineInputBorder(),
+                labelText: 'Informe o preço do etanol',
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.all(10),
+            child: TextField(
+              controller: gasolinaController,
+              decoration: InputDecoration(
+                suffixIcon: IconButton(
+                  onPressed: () => gasolinaController.clear(),
+                  icon: const Icon(Icons.clear),
+                ),
+                border: const OutlineInputBorder(),
+                labelText: 'Informe o preço da gasolina',
+              ),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              double etanol = double.tryParse(etanolController.text) ?? 0.0;
+              etanol *= 0.10;
+              double gasolina = double.tryParse(gasolinaController.text) ?? 0.0;
+              Preco preco = Preco(etanol, gasolina);
+
+              String mensagem = escolherCombustivel(preco);
+
+              setState(() {
+                mensagemCombustivel = mensagem;
+              });
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SegundaRota(preco),
+                ),
+              );
+            },
+            child: const Text('Ir para a Segunda Rota'),
+          ),
+          Text(
+            mensagemCombustivel,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Colors.blue,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SegundaRota extends StatelessWidget {
+  final Preco preco;
+  const SegundaRota(this.preco);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Segunda Rota'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Text(
+              '${preco.etanol.toStringAsFixed(2)} / ${preco.gasolina.toStringAsFixed(2)} = ${preco.razao().toStringAsFixed(2)}',
+              style: const TextStyle(
+                fontSize: 25,
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Text(
+              escolherCombustivel(preco),
+              style: const TextStyle(
+                fontSize: 25,
+                color: Colors.blue,
+              ),
+            ),
+            ElevatedButton(
+              child: const Text('Voltar para a Primeira Rota'),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

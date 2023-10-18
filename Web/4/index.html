@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Médias de Pontos da NBA</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 50%;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 10px;
+            text-align: center;
+        }
+
+        tr:hover {
+            background-color: #ffffff !important;
+            color: #FF4500;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: #8b9dc3;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #dfe3ee;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Jogador</th>
+            <th>Média de Pontos</th>
+        </tr>
+        <tr>
+            <td onclick="mostrarMensagem('Stephen Curry')">Stephen Curry</td>
+            <td onclick="mostrarMensagem('31.4')">31.4</td>
+        </tr>
+        <tr>
+            <td onclick="mostrarMensagem('LeBron James')">LeBron James</td>
+            <td onclick="mostrarMensagem('25.0')">25.0</td>
+        </tr>
+        <tr>
+            <td onclick="mostrarMensagem('Kevin Durant')">Kevin Durant</td>
+            <td onclick="mostrarMensagem('27.0')">27.0</td>
+        </tr>
+        <tr>
+            <td onclick="mostrarMensagem('Giannis Antetokounmpo')">Giannis Antetokounmpo</td>
+            <td onclick="mostrarMensagem('28.1')">28.1</td>
+        </tr>
+        <tr>
+            <td><strong>Média Total</strong></td>
+            <td><strong>27.6</strong></td> <!-- Média de pontos total fictícia -->
+        </tr>
+    </table>
+
+    <script>
+        function mostrarMensagem(mensagem) {
+            if (mensagem === 'Média Total') {
+                alert("Média de Pontos Total: 27.6"); // Média de pontos total fictícia
+            } else {
+                alert("Média de Pontos: " + mensagem);
+            }
+        }
+    </script>
+</body>
+</html>
