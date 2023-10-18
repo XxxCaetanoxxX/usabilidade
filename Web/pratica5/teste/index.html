@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulário de Cadastro</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Formulário de Cadastro</h2>
+        <form id="registration-form">
+            <div class="form-group">
+                <label for="login">Login:</label>
+                <input type="text" id="login" name="login" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Data de Nascimento:</label>
+                <input type="date" id="birthdate" name="birthdate" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirmar Senha:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+                <p class="error-message" id="password-error"></p>
+            </div>
+            <div class="form-group">
+                <label>Gênero:</label>
+                <div class="radio-group">
+                    <label for="male">Masculino</label>
+                    <input type="radio" id="male" name="gender" value="Masculino">
+                    <label for="female">Feminino</label>
+                    <input type="radio" id="female" name="gender" value="Feminino">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="city">Cidade:</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="homepage">Home Page:</label>
+                <input type="url" id="homepage" name="homepage">
+            </div>
+            <div class="form-group">
+                <label for="address">Endereço:</label>
+                <input type="text" id="address" name="address">
+            </div>
+            <div class="button-group">
+                <button type="submit" id="submit-button">Cadastrar</button>
+                <button type="reset" class="clear">Limpar</button>
+            </div>
+        </form>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

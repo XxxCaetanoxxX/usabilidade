@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div id="login" class="page">
+            <h2>Login</h2>
+            <form>
+                <input type="text" placeholder="E-mail" id="loginEmail">
+                <input type="password" placeholder="Senha" id="loginPassword">
+                <button onclick="login()">Login</button>
+            </form>
+            <a href="#" onclick="showPage('signup')">Cadastre-se</a>
+        </div>
+
+        <div id="signup" class="page">
+            <h2>Cadastro</h2>
+            <form>
+                <input type="text" placeholder="Nome" id="signupName">
+                <input type="text" placeholder="Data de Nascimento" id="signupDOB">
+                <input type="text" placeholder="E-mail" id="signupEmail">
+                <input type="password" placeholder="Senha" id="signupPassword">
+                <input type="password" placeholder="Confirmação de Senha" id="signupConfirmPassword">
+                <button onclick="signup()">Cadastrar</button>
+            </form>
+            <a href="#" onclick="showPage('login')">Já tem uma conta? Faça login</a>
+        </div>
+
+        <div id="resume" class="page">
+            <h2>Meu Currículo</h2>
+            <img src="avatar.jpg" alt="Minha Foto">
+            <p><strong>Nome:</strong> <span id="resumeName"></span></p>
+            <p><strong>Data de Nascimento:</strong> <span id="resumeDOB"></span></p>
+            <p><strong>Profissão:</strong> Desenvolvedor Web</p>
+            <p><strong>Escolaridade:</strong> Graduação em Ciência da Computação</p>
+            <h3>Experiência Profissional</h3>
+            <ul id="experienceList">
+                <li>Desenvolvedor Front-end na Empresa XYZ</li>
+                <li>Estagiário de Desenvolvimento Web na Empresa ABC</li>
+            </ul>
+            <a href="#" onclick="showPage('login')">Sair</a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

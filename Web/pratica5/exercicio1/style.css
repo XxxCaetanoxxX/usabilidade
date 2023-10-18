@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.receita {
+    margin: 20px;
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+img {
+    max-width: 300px;
+}
+
+h2 {
+    font-size: 18px;
+    margin-top: 5px;
+}
